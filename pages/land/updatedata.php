@@ -1,101 +1,127 @@
 <?php include('../../includes/conf.php');
-  get_header();
-  get_side();
 
-    $userid = $_GET['id'];
+    $userid = $_POST['userid'];
     $sql = "SELECT * FROM land where land_id = $userid"; 
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
 ?>
 
-<div class="col-md-12 container d-flex justify-content-center bg">
-  <div class="col-md-4">
-  <form method="post" class="col-md-12 bg-light mt-3 pdiv" enctype="multipart/form-data">
-  <div class="p-3"> 
-  <div>
-      <label for="land" class="form-label mt-3">Land Name</label>
-      <input type="text" class="form-control mb-1 in" id="land" name="lname" value="<?= $row['land_name']?>">
-      <input type="hidden" class="form-control mb-1 in"  name="land_id" value="<?= $row['land_id']?>">
+<div class="col-md-12 container d-flex justify-content-center bg-light">
+<form method="post" class="col-md-12 bg-light mt-3 pdiv" enctype="multipart/form-data">
+  <div class=" p-3">
+    <div>
+      <label class="form-label mt-3">Land Name</label>
+      <input type="text" class="form-control mb-1 in" id="lname" name="lname" value=" <?=$row['land_name']?>">
+      <input type="hidden" class="form-control mb-1 in" id="lid" name="lname" value=" <?=$row['land_id']?>">
     </div>
-    <div >
-      <label for="larea" class="form-label">Land Area</label>
-      <input type="text" class="form-control mb-1 in" id="larea" name="larea" value="<?= $row['land_area']?>">
+    <div>
+    <label class="form-label">Project location</label>
+      <select class="form-select form-select-sm in mb-1" name="larea" id="areaid" aria-label=".form-select-sm example">
+      <option selected>Select Your Area Area</option>
+        <?php
+         $sql = "SELECT * FROM area"; 
+         $result = $conn->query($sql);
+         while ($rows = $result->fetch_assoc()) {
+        ?>
+          <option value= "<?php echo $rows['area_id'];?>" <?php if ($rows['area_id']==$row['land_area']){echo "selected";}?>> 
+          <?php echo $rows['area_name'];?>
+        </option>
+          <?php }?>
+      </select>
     </div>
-    <div >
-      <label for="larea" class="form-label">Land Cost</label>
-      <input type="text" class="form-control mb-1 in" id="larea" name="lcost" value="<?= $row['land_cost']?>">
+    <div>
+      <label  class="form-label">Land Cost</label>
+      <input type="text" class="form-control mb-1 in" id="lcost" name="lcost" value=" <?=$row['land_cost']?> ">
     </div>
-    <div >
-    <label for="larea" class="form-label">Status</label>
-      <select class="form-select form-select-sm in mb-1" name="status" aria-label=".form-select-sm example">
-      <option >Open this select menu</option>
+
+    <div>
+      <label class="form-label">land measurement</label>
+      <input type="text" class="form-control mb-1 in" id="lme" name="lme" value=" <?=$row['lme']?> ">
+    </div>
+
+    <div>
+    <label  class="form-label">Status</label>
+    <select class="form-select form-select-sm in mb-1" id="status" aria-label=".form-select-sm example">
+      <option selected>Open this select menu</option>
         <?php
          $sql = "SELECT * FROM land_status limit 2"; 
          $result = $conn->query($sql);
          while ($rows = $result->fetch_assoc()) {
         ?>
-          <option value= "<?=$rows['ls_id'];?>" <?php if($rows['ls_id']==$row['ls_id']){echo 'selected';}?>><?php echo$rows['is_name'];?></option>
+          <option value= "<?php echo$rows['ls_id'];?>" <?php if($rows['ls_id'] == $row['ls_id']){echo 'selected';}?> ><?php echo$rows['is_name'];?></option>
           <?php }?>
       </select>
     </div>
     <div >
-    <label for="larea" class="form-label">Agent</label>
-      <select class="form-select form-select-sm in mb-1" name="agent" aria-label=".form-select-sm example">
+    <label  class="form-label">Agent</label>
+      <select class="form-select form-select-sm in mb-1" name="agent" id="dev" aria-label=".form-select-sm example">
       <option>Select Agent</option>
-        <?php
+      <?php
          $sql = "SELECT * FROM land_agent"; 
          $result = $conn->query($sql);
          while ($rows = $result->fetch_assoc()) {
         ?>
-          <option value= "<?= $rows['land_agent_id'];?>" <?php if($rows['land_agent_id']==$row['land_agent_id']){echo 'selected';};?>> 
-          <?php echo$rows['land_agent_name'];?>
-        </option>
-          <?php }?>
+          <option value= "<?php echo$rows['land_agent_id'];?>" <?php if($rows['land_agent_id'] == $row['land_agent_id']){echo 'selected';}?> >
+          <?php echo$rows['land_agent_name'];?></option>
+        <?php }?>
       </select>
     </div>
     <div class="mb-3">
-      <label for="formFile" class="form-label">Upload Land Photos</label>
-      <input class="form-control" type="file" id="formFile" name='pic'>
+      <label  class="form-label">Upload Land Photos</label>
+      <input class="form-control" type="file" id="pic" name='pic'>
   </div>
-    
-  <input type="submit" class="btn btn-secondary" name="sub">
+    <button type="button" class="btn btn-secondary " id="sub">Submit</button>
 
   </form>
-</div>
-</div>
- 
-<?php
+ </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
 
-if(isset($_POST['sub'])){
-  $id=$_POST['land_id'];
-  $lname=$_POST['lname'];
-  $larea=$_POST['larea'];
-  $lcost=$_POST['lcost'];
-  $status=$_POST['status'];
-  $agent=$_POST['agent'];
-  $image=$_FILES['pic'];
+ <script>
+$(document).ready(function(){
+$("#areaid").change(function(){
+  $.ajax({
+        url:"ajxdev.php",
+				type:"post",
+				data:{"areaid":$(this).val()},
+				success: function(data){
+					$("#dev").html(data);
+				}
+  });
+});
 
-  $sql = "UPDATE land SET land_name='$lname', land_area='$larea' , land_cost='$lcost' , land_agent_id= '$agent',
-  ls_id = '$status'  WHERE land_id=$id";
-  if ($conn->query($sql) === TRUE) {
-        header('Location: landview.php');
-      }else{
-        echo "User image update failed.";
-      }
-  
-  if($image['name']!=''){
-    $imageName='user_'.time().'_'.rand(100000,10000000).'.'.pathinfo($image['name'],PATHINFO_EXTENSION);
+$("#sub").click(function(){
+  var a =$("#lname").val();
+  $.ajax({
+        url:"lupajx.php",
+				type:"POST",
+				data:{
+          "lname":$("#lname").val(),
+          "lid":$("#lid").val(),
+          "larea":$("#areaid").val(),
+          "lcost":$("#lcost").val(),
+          "lme":$("#lme").val(),
+          "status":$("#status").val(),
+          "agent":$("#dev").val(),
+        
+        },
+				success: function(data){
+          Swal.fire(
+          'Update Success',
+          '',
+          'success'
+        )
+        
+					
+				}
+  });
+})
 
-    $updateImg="UPDATE land SET land_img='$imageName' WHERE land_id='$id'";
-    if($conn->query($updateImg) === TRUE){
-      move_uploaded_file($image['tmp_name'],'../../dist/images/agent/'.$imageName);
-      // header('Location:landview.php');
-    }else{
-      echo "User image update failed.";
-    }
-  }
-} else {
 
-} 
-?>
+
+});
+</script>
+
+
+
+
 

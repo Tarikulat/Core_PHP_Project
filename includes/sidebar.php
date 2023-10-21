@@ -17,6 +17,13 @@
                Add New Agent
       </a>
       <?php } ?>
+      <script>
+        $(document).ready(function(){
+          $("#agent").click(function(){
+            
+          });
+        })
+      </script>
 
       <?php if($_SESSION['role']==2) {?>
       <a class = " nav-link p-3 aborder" href="../agent/psagent.php"> 

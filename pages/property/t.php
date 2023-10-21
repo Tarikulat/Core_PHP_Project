@@ -1,10 +1,5 @@
-<?php include('../../includes/conf.php');
-  get_header();
-  get_side();
-?>
-<div class="col-md-10 table-responsive p-3 t">
-<?php 
-$agent = $_SESSION['id'];
+<?php  session_start();
+include("../../includes/db.php");
     $sql = "SELECT *
     FROM property
     NATURAL JOIN land_status
@@ -53,7 +48,7 @@ $agent = $_SESSION['id'];
                   <i class='fa-regular fa-pen-to-square fa-xl'></i></button>
                    </td> -->
 
-                   <?php if($_SESSION['loc'] == $row['property_location'] && $_SESSION['id']==$row['agent']) { ?>
+                   <?php if($_SESSION['loc'] == $row['property_location']) { ?>
                     <td>
                         <a class='btn nav-link click' data-id= "<?=$row['property_id']?>" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class='fa-regular fa-pen-to-square fa-xl'></i></a>

@@ -2,7 +2,26 @@
   get_header();
   get_side();
 ?>
-<div class="col-md-10 table-responsive p-3">
+
+<style>
+    .scrl{
+        overflow:auto;
+        height:100vh;
+        overflow-y: scroll;
+    }
+    .scrl::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrl {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+    }
+    .card-body{
+        background-color:#ABEBC6!important;
+    }
+</style>
+<div class="col-md-10 table-responsive p-3 scrl">
 <?php 
     $sql = "SELECT * FROM land  Natural JOIN land_status"; 
     $result = $conn->query($sql);

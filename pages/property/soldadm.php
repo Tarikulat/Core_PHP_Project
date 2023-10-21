@@ -5,13 +5,14 @@
 <div class="col-md-10 table-responsive p-3">
 
 <?php 
-    $sql = "SELECT p.property_name, p.property_location,p.land_img, p.property_cost, p.ls_id, ls.is_name, ar.area_name
+    $sql = "SELECT p.property_name, p.property_location,p.land_img, p.property_cost, p.ls_id, ls.is_name, ar.area_name,p.agent
     FROM property p
     NATURAL JOIN land_status ls
     JOIN area ar ON p.property_location = ar.area_id
     WHERE p.ls_id = 3
     ";
-
+$agent = $_SESSION['id'];
+echo $agent;
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {

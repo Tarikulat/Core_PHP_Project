@@ -73,7 +73,7 @@
                 </td>
                 <?php } ?>
                 <?php if($_SESSION['role']==1){?>
-                <td>
+                <!-- <td>
                   <a class='btn nav-link' href='updatedata.php?id=<?=$row['instal_id']?>'>
                   <i class='fa-regular fa-pen-to-square fa-xl'></i></a>
                    </td>
@@ -81,7 +81,7 @@
                 <td>
                   <a class='btn nav-link' href='Delete.php?id=<?=$row['instal_id']?>'>
                   <i class='fa-solid fa-trash fa-xl' style='color: #ff0000;'></i></a>
-                </td>
+                </td> -->
                 <?php } ?>
                 
             <tr>

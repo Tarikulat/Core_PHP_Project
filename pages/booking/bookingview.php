@@ -37,6 +37,7 @@
                 <td><?=$row['payname']?></td>
 
                 <?php if($_SESSION['loc'] == $row['booking_area']) { ?>
+                    
                     <td>
                     <a class='btn nav-link' href='updatedata.php?id=<?=$row['bking_id']?>'>
                     <i class='fa-regular fa-pen-to-square fa-xl'></i></a>

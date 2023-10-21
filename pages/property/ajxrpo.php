@@ -22,13 +22,13 @@ $row = $result->fetch_assoc();
     </div>
     <div>
       <label for="pcost" class="form-label">Apartment Total Cost</label>
-      <input type="text" class="form-control mb-1 in" id="project_price" name="ploname" value="<?=$row['project_price']?>" disabled>
-      <input type="hidden" class="form-control mb-1 in" id="project_id" name="ploname" value="<?=$row['project_name']?>" disabled>
+      <input type="text" class="form-control mb-1 in" id="pconame" name="ploname" value="<?=$row['project_price']?>" disabled>
+      <input type="text" class="form-control mb-1 in" id="project_name" value="<?=$row['project_name']?>" disabled>
 </div>
 
     <div>
       <label for="pcost" class="form-label">Selling Price</label>
-      <input type="text" class="form-control mb-1 in" id="pcost" name="selling_p">
+      <input type="text" class="form-control mb-1 in" id="selling_p" name="selling_p">
     </div>
 
     <div>
@@ -74,25 +74,29 @@ $row = $result->fetch_assoc();
 </div>
 <script>
   $(document).ready(function(){
-    $('#sub').click(function(){
+    $('#sub').click(function(e){
+      e.preventDefault();
         $("#msg").show();
         $.ajax({
-        url:"ajaxdata.php",
+        url:"exisitingpro.php",
         type:"post",
         data:{
           
           "ploname":$("#ploname").val(),
-          "project_id":$("#project_id").val(),
-          "project_price":$("#project_price").val(),
-          "pcost":$("#pcost").val(),
+          "pname":$("#project_name").val(),
+          "pconame":$("#pconame").val(),
+          "selling_p":$("#selling_p").val(),
           "agent":$("#agents").val(),
           "status":$("#status").val(),
           "pic":$("#pic").val(),
         },
         success: function(data){
-        $("#rak").html(data);
         $("#msg").hide();
-        alert("done");
+        Swal.fire(
+          'Update Success',
+          '',
+          'success'
+        )
 
       }
       });

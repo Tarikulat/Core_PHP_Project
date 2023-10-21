@@ -9,7 +9,7 @@
   <div class=" p-3">
     <div>
       <label for="land" class="form-label mt-3">Land Name</label>
-      <input type="text" class="form-control mb-1 in" id="land" name="lname">
+      <input type="text" class="form-control mb-1 in" id="lname" name="lname">
     </div>
     <div>
     <label for="larea" class="form-label">Project location</label>
@@ -28,17 +28,17 @@
     </div>
     <div>
       <label for="larea" class="form-label">Land Cost</label>
-      <input type="text" class="form-control mb-1 in" id="larea" name="lcost">
+      <input type="text" class="form-control mb-1 in" id="lcost" name="lcost">
     </div>
 
     <div>
       <label for="larea" class="form-label">land measurement</label>
-      <input type="text" class="form-control mb-1 in" id="larea" name="lme">
+      <input type="text" class="form-control mb-1 in" id="lme" name="lme">
     </div>
 
     <div>
     <label for="larea" class="form-label">Status</label>
-    <select class="form-select form-select-sm in mb-1" name="status" aria-label=".form-select-sm example">
+    <select class="form-select form-select-sm in mb-1" id ="status" name="status" aria-label=".form-select-sm example">
       <option selected>Open this select menu</option>
         <?php
          $sql = "SELECT * FROM land_status limit 2"; 
@@ -51,7 +51,7 @@
     </div>
     <div>
     <label for="larea" class="form-label">Agent</label>
-      <select class="form-select form-select-sm in mb-1" name="agent"id ="dev" aria-label=".form-select-sm example">
+      <select class="form-select form-select-sm in mb-1" name="agent" id ="dev" aria-label=".form-select-sm example">
       <option selected>Select Agent</option>
         
       </select>
@@ -60,8 +60,9 @@
       <label for="formFile" class="form-label">Upload Land Photos</label>
       <input class="form-control" type="file" id="formFile" name='pic'>
   </div>
-    <button type="submit" class="btn btn-secondary " name="sub">Submit</button>
+    <button type="button" class="btn btn-secondary " id="sub">Submit</button>
     <a  type="button"  href="landview.php" class="btn btn-secondary float-end">View All land</a>
+    <p id="msg" class="text-center" style="display:none;">Uploading Data</p>
   </form>
  </div>
  </div>
@@ -79,29 +80,55 @@ $("#areaid").change(function(){
 				}
   });
 });
+
+$("#sub").click(function(e){
+  e.preventDefault();
+  $("#msg").show();
+  $.ajax({
+        url:"upload.php",
+				type:"POST",
+				data:{
+          "lname":$("#lname").val(),
+          "larea":$("#areaid").val(),
+          "lcost":$("#lcost").val(),
+          "lme":$("#lme").val(),
+          "status":$("#status").val(),
+          "agent":$("#dev").val(),
+        },
+				success: function(data){
+          $("#msg").hide(),
+          Swal.fire(
+          'Submission Success',
+          '',
+          'success'
+        )
+					
+				}
+  });
+})
 });
 </script>
 
 <?php
-if(isset($_POST['sub'])){
-  $lname=$_POST['lname'];
-  $larea=$_POST['larea'];
-  $lcost=$_POST['lcost'];
-  $lme=$_POST['lme'];
-  $status=$_POST['status'];
-  $agent=$_POST['agent'];
-  $image=$_FILES['pic'];
-  $imageName='';
-  if($image['name']!=''){
-    $imageName='user_'.time().'_'.rand(100000,10000000).'.'.pathinfo($image['name'],PATHINFO_EXTENSION);
-  }
-if(!empty($lname)&& !empty($larea)&& !empty($lcost)&& !empty($status) && !empty($agent)){
-  $sql ="INSERT INTO land (land_name,land_area,land_cost,ls_id,land_agent_id,land_img,lme ) VALUES('$lname','$larea','$lcost','$status','$agent','$imageName','$lme')";
-  if ($conn->query($sql) === TRUE) {
-    move_uploaded_file($image['tmp_name'],'../../dist/images/agent/'.$imageName);
-  } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-  }
-}
-}
+// if(isset($_POST['sub'])){
+//   $lname=$_POST['lname'];
+//   $larea=$_POST['larea'];
+//   $lcost=$_POST['lcost'];
+//   $lme=$_POST['lme'];
+//   $status=$_POST['status'];
+//   $agent=$_POST['agent'];
+//   $image=$_FILES['pic'];
+//   $imageName='';
+//   if($image['name']!=''){
+//     $imageName='user_'.time().'_'.rand(100000,10000000).'.'.pathinfo($image['name'],PATHINFO_EXTENSION);
+//   }
+// if(!empty($lname)&& !empty($larea)&& !empty($lcost)&& !empty($status) && !empty($agent)){
+//   $sql ="INSERT INTO land (land_name,land_area,land_cost,ls_id,land_agent_id,land_img,lme ) VALUES('$lname','$larea','$lcost','$status','$agent','$imageName','$lme')";
+//   if ($conn->query($sql) === TRUE) {
+//     move_uploaded_file($image['tmp_name'],'../../dist/images/agent/'.$imageName);
+//   } else {
+//     echo "Error: " . $sql . "<br>" . $conn->error;
+//   }
+// }
+// }
 ?>

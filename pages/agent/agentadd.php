@@ -80,7 +80,7 @@ if(isset($_POST['sub'])){
     $imageName='user_'.time().'_'.rand(100000,10000000).'.'.pathinfo($image['name'],PATHINFO_EXTENSION);
   }
 
-if(!empty($aname)&& !empty($aarea)&& !empty($acontact)){
+if(!empty($user_name)&& !empty($password)&& !empty($role)){
   $sql ="INSERT INTO land_agent (land_agent_name,land_agent_location,land_agent_contact,agent_img,user_id,user_name,password) 
   VALUES('$aname','$aarea','$acontact','$imageName','$role','$user_name','$password')";
   if ($conn->query($sql) === TRUE) {

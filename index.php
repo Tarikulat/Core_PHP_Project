@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['login'] = 'yes';
 
         if($row['user_id']==1){
-            header("location:pages/index/");
+            header("location:pages/index/index.php");
         }
 
         if($row['user_id']==2){
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
         }
 
         if($row['user_id']==3){
-            header("location:pages/agent/psagent.php");
+            header("location:pages/agent/agent.php");
             
         }
         
@@ -51,6 +51,7 @@ if (isset($_POST['submit'])) {
     <div class="container  p-3" style="margin-top:200px;">
         <div class="form col-md-12 d-flex justify-content-center ">
             <form action="" method="post" class="pdiv p-5 bg-light">
+           <p style="font-size: 20px; padding:10px;">Real Estate Management</p>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Username</label><br>
                     <input type="text" name="username" required>

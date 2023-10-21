@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.16/dist/sweetalert2.all.min.js"></script>
     <link rel="icon" type="image/x-icon" href="../dist/images/pic/favicon.ico">
     <link rel="stylesheet" href="../../dist/css/style.css">
   </head>
@@ -25,8 +26,10 @@
             Land
           </a>
           <ul class="dropdown-menu navli">
+          <?php if($_SESSION['role']==1 || $_SESSION['role']==2){?>
             <li><a class="dropdown-item" href="../land/formland.php">Add New Land</a></li>
-            <li><a class="dropdown-item" href="../land/landview.php">View All Land</a></li>
+            <?php }?>
+            <li><a class="dropdown-item" href="../land/ajxview.php">View All Land</a></li>
           </ul>
         </li>
         <?php if($_SESSION['role']==1){?>
@@ -82,12 +85,16 @@
             Apartment
           </a>
           <ul class="dropdown-menu navli">
+          <?php if($_SESSION['role']==1 || $_SESSION['role']==2){?>
             <li><a class="dropdown-item" href="../property/formproperty.php">Add New Aprtment</a></li>
             <li><a class="dropdown-item" href="../property/exitpro.php">Add Existing Aprtment</a></li>
-            <li><a class="dropdown-item" href="../property/propertyview.php">View All Aprtment</a></li>
             <li><a class="dropdown-item" href="../property/view.php">Agent Base Aprtment</a></li>
+            <?php }?>
+            <li><a class="dropdown-item" href="../property/propertyview.php">View All Aprtment</a></li>
+            
           </ul>
         </li>
+        <?php if($_SESSION['role']==1 || $_SESSION['role']==2){?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Customer
@@ -98,6 +105,7 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
+        <?php }?>
         <?php if($_SESSION['role']==1){?>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -109,14 +117,19 @@
             </ul>
           </li>
         <?php }?>
+        <?php if($_SESSION['role']==1 || $_SESSION['role']==2){?>
         <li class="nav-item dropdown">
+          
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Booking
           </a>
           <ul class="dropdown-menu navli">
-            <li><a class="dropdown-item" href="../booking/formbooking.php">Book An Apartment</a></li>
+          
+            <!-- <li><a class="dropdown-item" href="../booking/formbooking.php">Book An Apartment</a></li> -->
+            
             <li><a class="dropdown-item" href="../booking/bookingview.php">View Booking</a></li>
           </ul>
+          <?php }?>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

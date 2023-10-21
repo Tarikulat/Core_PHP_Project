@@ -35,7 +35,7 @@
       <option selected>Select Agent</option>
         <?php
         $loc = $_SESSION['loc'];
-         $sql = "SELECT * FROM land_agent"; 
+         $sql = "SELECT * FROM land_agent where user_id=2"; 
          $result = $conn->query($sql);
          while ($row = $result->fetch_assoc()) {
         ?>

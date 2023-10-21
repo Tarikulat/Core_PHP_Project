@@ -1,7 +1,7 @@
 <?php include('../../includes/conf.php');
 include("../../includes/db.php");
 
-    $userid = $_POST['id'];
+    $userid = $_POST['userid'];
     $sql = "SELECT * FROM property 
     where property_id = $userid"; 
     $result = $conn->query($sql);
@@ -60,13 +60,14 @@ include("../../includes/db.php");
       <select class="form-select form-select-sm in mb-1" name="agent" id="dev" aria-label=".form-select-sm example">
       <option>Select Agent</option>
       <?php
-         $sql = "SELECT * FROM land_agent JOIN property ON land_agent.land_agent_id = property.agent"; 
+         $sql = "SELECT * FROM land_agent"; 
          $result = $conn->query($sql);
-         $rows = $result->fetch_assoc();
+         while ($rows = $result->fetch_assoc()) {
         ?>
           <option value= "<?php echo $rows['land_agent_id'];?>" <?php if($rows['land_agent_id']==$row['agent']){echo 'selected';}?> > 
           <?php echo$rows['land_agent_name'];?>
         </option>
+        <?php }?>
       </select>
     </div>
     <div class="mb-3">
@@ -93,10 +94,6 @@ $("#areaid").change(function(){
   });
 });
 $("#sub").click(function(){
-  a=$("#pname").val(),
-  b=$("#property_id").val(),
-  // console.log(a);
-  // console.log(b);
   $.ajax({
         url:"ajaxdata.php",
 				type:"POST",
@@ -111,11 +108,13 @@ $("#sub").click(function(){
           "agent":$("#dev").val(),
         },
 				success: function(data){
+          
 					Swal.fire(
-          'Update Success',
+          'submission Success',
           '',
           'success'
         )
+        $(".t").load("t.php");
 				}
   });
 });

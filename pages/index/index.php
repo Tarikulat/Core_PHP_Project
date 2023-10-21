@@ -20,11 +20,14 @@
     -ms-overflow-style: none; 
     scrollbar-width: none; 
     }
+    .card-body{
+        background-color:#ABEBC6!important;
+    }
 </style>
 <div class="col-md-10 scrl">
         <div class="container bg-light d-flex rak">
-            <div class="col-md-4">
-            <i class="fa-solid fa-bounce fa-xl m-3" style="color: #2471A3 ;">
+            <div class="col-md-4 text-center">
+            <i class="fa-solid fa-bounce fa-xl m-3" style="color: #2471A3 ;font-family:Hack">
             <?php echo "welcome ".$_SESSION['username']?>
                     </i>
                 
@@ -50,17 +53,86 @@
     $re = $conn->query($s);
     $ro = $re->fetch_assoc();             
 ?>
-
-                    <span>
-                    <i class="fa-solid fa-chart-pie fa-bounce fa-2xl m-3" style="color: #ff8000;">
-                        <span><?=$rows['pcost']?></span>
-                    </i>
-                    </span>
-                        <h4 class="pad ">Total Investment</h4>
+                    <div class="card">
+                    <div class="card-content">
+                    <div class="d-flex justify-content-center">
+                    <i class="fa-solid fa-chart-pie fa-bounce fa-2xl m-3"style="color: #ff8000;"></i>
+                            <h4 class="pad text-center" style="font-family:Hack">Total Investment</h4>
+                        </div>
+                        <div class="card-body bg-light ">
+                        <div class="media d-flex justify-content-center">
+                            <div class="align-self-center">
+                            
+                            </div>
+                            <div class="media-body text-right">
+                            <i class="fa-solid fa-dollar-sign fa-xl m-3" style="color: #000066	;">
+                            <span><?=$rows['pcost']?></span> </i>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    
                 </div>
             </div>
-            <div class="col-md-8 d-flex justify-content-end rak">
-                <div class="p-3 d-flex flex-column">
+            <div class="col-md-8 justify-content-between pt-5">
+                <div class="container d-flex rak bg-light">
+            <div class="card col-md-4">
+                    <div class="card-content">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-dollar-sign fa-2xl m-3" style="color: #ff8000;"></i>
+                            <h4 class="pad text-center" style="font-family:Hack">Total Sales</h4>
+                        </div>
+                        <div class="card-body bg-light ">
+                        <div class="media d-flex justify-content-center">
+                            <div class="align-self-center">
+                            </div>
+                            <div class="media-body text-right">
+                            <i class="fa-solid fa-dollar-sign fa-xl m-3" style="color: #000066;"> <span><?=$row['pcost']?></span></i>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="card col-md-4 mx-1">
+                    <div class="card-content">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-arrow-trend-up fa-xl m-3" style="color: #ff8000;"></i>
+                            <h4 class="pad text-center" style="font-family:Hack">Total Profit</h4>
+                        </div>
+                    
+                        <div class="card-body bg-light ">
+                        <div class="media d-flex justify-content-center">
+                            <div class="align-self-center">
+                            
+                            </div>
+                            <div class="media-body text-right">
+                            <i class="fa-solid fa-dollar-sign fa-xl m-3" style="color: #000066;"><span style="color: #000066;"><?=$ro['sp']-$row['pcost']?></span></i>
+                        
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="card col-md-4">
+                    <div class="card-content">
+                    <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-arrow-trend-down fa-2xl m-3" style="color: #ff8000;"></i>
+                            <h4 class="pad text-center" style="font-family:Hack">Total Loss</h4>
+                        </div>
+                        <div class="card-body bg-light ">
+                        <div class="media d-flex justify-content-center">
+                            <div class="align-self-center">
+                            </div>
+                            <div class="media-body text-right">
+                            <i class="fa-solid fa-dollar-sign fa-xl m-3" style="color: #000066;"><span style="color: #000066;">0</span></i>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+                <!-- <div class="p-3 d-flex flex-column">
                     <span>
                         <i class="fa-solid fa-dollar-sign fa-2xl m-3" style="color: #ff8000;"> <span><?=$row['pcost']?></span></i>
                     </span>
@@ -81,9 +153,11 @@
                         </i>
                     </span>
                     <h4 class="pad text-center">Total loss</h4>
-                </div>
+                </div> -->
             </div>
         </div>
+
+        <!-- card dashboard for project  start-->
         <div class="container d-flex bg-light rak">
             <div class="col-md-6 vh-80 p-3 table-responsive">
             <?php 
@@ -100,9 +174,9 @@
                 
                 if ($result->num_rows > 0) {
                 ?>
-                <table class="table text-center">
+                <table class="table text-center table-hover">
                     <thead>
-                        <h3 class="text-center">Booking Lists</h3>
+                        <h3 class="text-center" style="font-family:Hack">Booking Lists</h3>
                         <th>Customar Name</th>
                         <th>Property Name</th>
                         <th>Booking Date</th>
@@ -123,35 +197,67 @@
             </div>
             <div class="col-md-6 d-flex mt-3  bg-light rak">
                 <div class=" col-md-6  text-center p-3">
-                    <div class="d1 bg-success con1">
+                <?php 
+                            // $sql = "SELECT COUNT(*) as total_rows FROM land_agent";
+                            // $result = $conn->query($sql);
+                            // $row = $result->fetch_assoc();
+
+                            $sql = "SELECT COUNT(*) as total_rows FROM p_contactor";
+                            $result = $conn->query($sql);
+                            $row = $result->fetch_assoc();
+
+                            $sqls="SELECT COUNT(*) as total_rowss FROM property";
+                            $results = $conn->query($sqls);
+                            $rows = $results->fetch_assoc();
+                        ?>
+
+
+                        <div class="card col-md-12">
+                                <div class="card-content">
+                                    <div class="d-flex justify-content-center">
+                                    <i class="fa-solid fa-users fa-xl m-3"></i>
+                                        <h4 class="pad text-center" style="font-family:Hack">Total Developers</h4>
+                                    </div>
+                                    <div class="card-body bg-light ">
+                                        <div class="media ">
+                                            <div class="align-self-center d-flex justify-content-between">
+                                            <i style="color: #000066;"> <h5 style="font-family:Hack">Total Developers:</h5></i> <i class="fa-solid fa--sign fa-xl m-3" style="color: #000066;"> <span><?= $row['total_rows']?></span></i>
+                                            </div>
+
+                                            <div class="align-self-center d-flex justify-content-between">
+                                            <i style="color: #000066;"> <h5 style="font-family:Hack">Total Apartment:</h5></i> <i class="fa-solid fa--sign fa-xl m-3" style="color: #000066;"> <span><?=$rows['total_rowss']?></span></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+
+
+                    <!-- <div class="d1 bg-success con1">
                         <i class="fa-solid fa-users fa-xl m-3 text-light"></i>
                     </div>
                     <div class="d2">
-                        <?php 
-                            $sql = "SELECT COUNT(*) as total_rows FROM land_agent";
-                            $result = $conn->query($sql);
-                            $row = $result->fetch_assoc();
-                        ?>
                         <h6>Total Agents: <?= $row['total_rows']?></h6>
                         <h6>Total Sold:</h6>
                     </div>
                     <div class="d1 bg-success con1">
                         <i class="fa-solid fa-users fa-xl m-3 text-light"></i>
-                    </div>
+                    </div> -->
                     <?php 
                             $sql = "SELECT COUNT(*) as total_rows FROM p_contactor";
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
                     ?>
-                    <div class="d2">
+                    <!-- <div class="d2">
                         <h6>Total Developer:<?= $row['total_rows']?></h6>
                         <h6>Under Construction:</h6>
-                    </div>
+                    </div> -->
                 </div>
                 <div class=" col-md-6  text-center p-3">
-                    <div class="d1 bg-success con1">
-                    <i class="fa-solid fa-person-digging fa-xl m-3" style="color: #ffffff;"></i>
-                    </div>
+                    <!-- <div class="d1 bg-success con1">
+                    
+                    </div> -->
                     <?php 
                             $sql = "SELECT COUNT(*) as total_rows FROM project where ps_id =1 ";
                             $result = $conn->query($sql);
@@ -162,15 +268,26 @@
                             $rows = $results->fetch_assoc();
                     ?>
                     <div class="d2">
-                        <h6>Ongoing Project: <?=$row['total_rows']?></h6>
-                        <h6>Compeleted Project: <?=$rows['total_rowss']?> </h6>
-                    </div>
-                    <div class="d1 bg-success con1">
-                    <i class="fa-solid fa-building fa-xl m-3" style="color: #ffffff;"></i>
-                    </div>
-                    <div class="d2">
-                        <h6>Total Developer:</h6>
-                        <h6>Total Developer:</h6>
+                        <!-- <h6>Ongoing Project: <?=$row['total_rows']?></h6>
+                        <h6>Compeleted Project: <?=$rows['total_rowss']?> </h6> -->
+                        <div class="card col-md-12">
+                                <div class="card-content">
+                                    <div class="d-flex justify-content-center">
+                                    <i class="fa-solid fa-person-digging fa-xl m-3"></i>
+                                        <h4 class="pad text-center"style="font-family:Hack">Projects Details</h4>
+                                    </div>
+                                    <div class="card-body bg-light ">
+                                        <div class="media ">
+                                            <div class="align-self-center d-flex justify-content-between">
+                                            <i style="color: #000066;"> <h5 style="font-family:Hack">Ongoing Projects:</h5></i> <i class="fa-solid fa--sign fa-xl m-3" style="color: #000066;"> <span><?=$row['total_rows']?></span></i>
+                                            </div>
+                                            <div class="align-self-center d-flex justify-content-between">
+                                            <i style="color: #000066;"> <h5 style="font-family:Hack">Compeleted Projects:</h5></i> <i class="fa-solid fa--sign fa-xl m-3" style="color: #000066;"> <span><?=$rows['total_rowss']?></span></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,7 +328,7 @@
                         chart.draw(data, options);
                     }
                 </script>
-                <h3 class="text-center">Ongoing Project Status</h3>
+                <h3 class="text-center" style="font-family:Hack">Ongoing Project Status</h3>
                     <div id="piechart_3d" class="p-3 vh-25" ></div>
             </div>
                 <div class="col-md-6 vh-80 p-3 table-responsive">
@@ -266,7 +383,7 @@
                         </div>
                         </div>
 <div class="container d-flex bg-light rak">
-    <div class="col-md-6 vh-80 p-3 table-responsive">
+    <div class="col-md-12 vh-80 p-3 table-responsive">
             <?php 
                 $sql = "SELECT p.property_name, p.property_location, p.land_img, p.property_cost, p.ls_id, ls.is_name, ar.area_name
                 FROM property p
@@ -279,9 +396,9 @@
 
                 if ($result->num_rows > 0) {
                 ?>
-                    <table class='table table-light align-middle text-center table-bordered'>
+                    <table class='table table-light align-middle text-center table-hover'>
                         <thead>
-                            <tr> <h3 class="text-center">Solded Property</h3>
+                            <tr> <h3 class="text-center" style="font-family:Hack">Solded Property</h3>
                                 <th>Property Name</th> 
                                 <th>Property Area</th>
                                 <th>Selling Price</th>
